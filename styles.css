@@ -74,7 +74,6 @@ nav.scrolled { border-bottom-color: var(--line); }
   color: var(--ink);
   letter-spacing: -0.01em;
 }
-.nav-logo span { color: var(--accent-warm); }
 .nav-links {
   display: flex;
   gap: 32px;
