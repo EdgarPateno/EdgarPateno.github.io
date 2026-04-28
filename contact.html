@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contact — Edgar Pateño</title>
+<meta name="description" content="Have a Shopify project in mind? Get in touch with Edgar Pateño — Shopify developer, Klaviyo specialist, and customer support pro." />
+
+<meta property="og:title" content="Contact — Edgar Pateño" />
+<meta property="og:description" content="Let's talk about your Shopify project." />
+<meta property="og:type" content="website" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Edgar<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#skills">Skills</a></li>
+      <li><a href="index.html#projects">Work</a></li>
+      <li><a href="index.html#experience">Experience</a></li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Get in touch</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="contact-hero">
+  <div class="container contact-hero-inner reveal">
+    <div class="section-eyebrow">Contact</div>
+    <h1>Let's <em>talk</em>.</h1>
+    <p>Tell me a bit about your project — current store, where you're stuck, and what success looks like. I usually reply within one business day.</p>
+  </div>
+</header>
+
+<!-- CONTACT GRID -->
+<section class="contact-section">
+  <div class="container">
+    <div class="contact-grid">
+
+      <!-- SIDEBAR -->
+      <aside class="contact-sidebar reveal">
+        <h3>Prefer the direct route?</h3>
+        <p>If email or a quick call works better than a form, I'm happy either way. I take on a small number of new builds and ongoing partnerships each quarter.</p>
+        <div class="direct-contact">
+          <a href="mailto:edgarpateno80@gmail.com">
+            <span class="label">Email</span>
+            <span class="value">edgarpateno80@gmail.com</span>
+          </a>
+          <a href="tel:+639089866840">
+            <span class="label">Phone</span>
+            <span class="value">+63 908 986 6840</span>
+          </a>
+        </div>
+      </aside>
+
+      <!-- FORM -->
+      <div class="reveal">
+        <form id="contact-form" class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+
+          <div class="form-row">
+            <div class="form-field">
+              <label for="name">Name <span class="req">*</span></label>
+              <input id="name" name="name" type="text" required autocomplete="name" />
+            </div>
+            <div class="form-field">
+              <label for="email">Email <span class="req">*</span></label>
+              <input id="email" name="email" type="email" required autocomplete="email" />
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="company">Company / Store URL</label>
+            <input id="company" name="company" type="text" placeholder="e.g. yourstore.com" />
+          </div>
+
+          <div class="form-field">
+            <label for="project">Project type</label>
+            <select id="project" name="project">
+              <option value="">Select one (optional)</option>
+              <option>New Shopify build</option>
+              <option>Theme redesign / overhaul</option>
+              <option>CRO &amp; A/B testing</option>
+              <option>Klaviyo email marketing</option>
+              <option>B2B / wholesale setup</option>
+              <option>Ongoing maintenance &amp; support</option>
+              <option>Something else</option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label for="message">Your message <span class="req">*</span></label>
+            <textarea id="message" name="message" rows="6" required placeholder="A few sentences about what you're working on, your timeline, and what you're hoping to get out of working together."></textarea>
+            <div class="hint">The more context you share, the better my first reply can be.</div>
+          </div>
+
+          <!-- Honeypot for spam bots; humans won't see this -->
+          <div class="hp-field" aria-hidden="true">
+            <label>Don't fill this out: <input name="_gotcha" type="text" tabindex="-1" autocomplete="off" /></label>
+          </div>
+
+          <!-- Sets the email subject Formspree sends to your inbox -->
+          <input type="hidden" name="_subject" value="New portfolio inquiry — edgarpateno.github.io" />
+
+          <div class="form-submit">
+            <span class="small">By sending, you agree I'll use your details only to reply.</span>
+            <button type="submit" class="btn btn-primary" id="submit-btn">Send message</button>
+          </div>
+
+          <div class="form-message" id="form-message" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-inner">
+    <div>© <span id="year"></span> Edgar Pateño · Built with care.</div>
+    <div>Shopify Developer · Klaviyo Specialist · Customer Support</div>
+  </div>
+</footer>
+
+<script>
+  // Year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Nav scroll state
+  const nav = document.getElementById('nav');
+  const onScroll = () => {
+    if (window.scrollY > 12) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+  // Formspree AJAX submission — keeps user on page, shows inline result
+  const form = document.getElementById('contact-form');
+  const btn = document.getElementById('submit-btn');
+  const msg = document.getElementById('form-message');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    msg.className = 'form-message';
+    msg.textContent = '';
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    try {
+      const data = new FormData(form);
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (res.ok) {
+        form.reset();
+        msg.className = 'form-message success';
+        msg.textContent = 'Thanks — your message is in. I\'ll reply within one business day.';
+        btn.textContent = 'Sent ✓';
+      } else {
+        const json = await res.json().catch(() => ({}));
+        const errText = (json.errors && json.errors.map(x => x.message).join(', ')) || 'Something went wrong. Please email me directly at edgarpateno80@gmail.com.';
+        msg.className = 'form-message error';
+        msg.textContent = errText;
+        btn.disabled = false;
+        btn.textContent = 'Send message';
+      }
+    } catch (err) {
+      msg.className = 'form-message error';
+      msg.textContent = 'Network issue. Please try again — or email edgarpateno80@gmail.com.';
+      btn.disabled = false;
+      btn.textContent = 'Send message';
+    }
+  });
+</script>
+
+</body>
+</html>
