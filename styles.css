@@ -69,8 +69,8 @@ nav.scrolled { border-bottom-color: var(--line); }
 }
 .nav-logo {
   font-family: 'Fraunces', serif;
-  font-weight: 600;
-  font-size: 18px;
+  font-weight: 900;
+  font-size: 25px;
   color: var(--ink);
   letter-spacing: -0.01em;
 }
