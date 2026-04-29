@@ -241,12 +241,13 @@ nav.scrolled { border-bottom-color: var(--line); }
   letter-spacing: 0.06em;
 }
 
-/* Hero visual / two stacked browser mockups */
+/* Hero visual / two stacked browser mockups, separated */
 .hero-visual {
-  position: relative;
   width: 100%;
   max-width: 620px;
-  aspect-ratio: 5 / 4;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
   justify-self: center;
 }
 .browser-mockup {
@@ -257,30 +258,11 @@ nav.scrolled { border-bottom-color: var(--line); }
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow-lg);
-  transition: transform 0.4s ease, box-shadow 0.4s ease, z-index 0s 0.4s;
-}
-/* Inside hero-visual: two mockups stacked with absolute positioning */
-.hero-visual .browser-mockup {
-  position: absolute;
-  width: 88%;
-}
-.hero-visual .browser-mockup.back {
-  top: 0;
-  right: 0;
-  transform: rotate(3deg);
-  z-index: 1;
-}
-.hero-visual .browser-mockup.front {
-  bottom: 0;
-  left: 0;
-  transform: rotate(-2deg);
-  z-index: 2;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 .hero-visual .browser-mockup:hover {
-  transform: rotate(0deg) translateY(-4px);
-  z-index: 3;
+  transform: translateY(-4px);
   box-shadow: 0 8px 16px rgba(15, 31, 36, 0.08), 0 32px 64px rgba(15, 31, 36, 0.12);
-  transition: transform 0.4s ease, box-shadow 0.4s ease, z-index 0s;
 }
 .browser-bar {
   height: 36px;
@@ -331,20 +313,7 @@ nav.scrolled { border-bottom-color: var(--line); }
 @media (max-width: 880px) {
   .hero { padding: 130px 0 60px; }
   .hero-inner { grid-template-columns: 1fr; gap: 48px; }
-  .hero-visual {
-    max-width: 480px;
-    aspect-ratio: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-  }
-  .browser-mockup.front,
-  .browser-mockup.back {
-    position: relative;
-    width: 100%;
-    transform: none;
-    top: auto; right: auto; bottom: auto; left: auto;
-  }
+  .hero-visual { max-width: 480px; }
   .hero-stats { gap: 32px; }
 }
 
