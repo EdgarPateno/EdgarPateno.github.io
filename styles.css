@@ -250,8 +250,8 @@ nav.scrolled { border-bottom-color: var(--line); }
   justify-self: center;
 }
 .browser-mockup {
-  position: absolute;
-  width: 88%;
+  position: relative;
+  width: 100%;
   background: var(--bg-alt);
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -259,19 +259,24 @@ nav.scrolled { border-bottom-color: var(--line); }
   box-shadow: var(--shadow-lg);
   transition: transform 0.4s ease, box-shadow 0.4s ease, z-index 0s 0.4s;
 }
-.browser-mockup.back {
+/* Inside hero-visual: two mockups stacked with absolute positioning */
+.hero-visual .browser-mockup {
+  position: absolute;
+  width: 88%;
+}
+.hero-visual .browser-mockup.back {
   top: 0;
   right: 0;
   transform: rotate(3deg);
   z-index: 1;
 }
-.browser-mockup.front {
+.hero-visual .browser-mockup.front {
   bottom: 0;
   left: 0;
   transform: rotate(-2deg);
   z-index: 2;
 }
-.browser-mockup:hover {
+.hero-visual .browser-mockup:hover {
   transform: rotate(0deg) translateY(-4px);
   z-index: 3;
   box-shadow: 0 8px 16px rgba(15, 31, 36, 0.08), 0 32px 64px rgba(15, 31, 36, 0.12);
@@ -1115,4 +1120,263 @@ footer {
   left: 0; top: 18px;
   width: 14px; height: 1.5px;
   background: var(--accent-warm);
+}
+
+/* ===== WORK PAGE ===== */
+.work-hero {
+  padding: 160px 0 60px;
+  position: relative;
+  overflow: hidden;
+}
+.work-hero::before {
+  content: '';
+  position: absolute;
+  top: 60px; right: -200px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(200, 152, 96, 0.12) 0%, transparent 70%);
+  border-radius: 50%;
+  z-index: 0;
+}
+.work-hero-inner {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.work-hero h1 {
+  font-size: clamp(40px, 6vw, 64px);
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+.work-hero h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.work-hero p {
+  font-size: 18px;
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+
+.work-case {
+  padding: 100px 0;
+  border-top: 1px solid var(--line);
+}
+.work-case:nth-child(even) {
+  background: var(--bg-alt);
+}
+.work-case-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+.work-case:nth-child(even) .work-mockup-wrap { order: 2; }
+@media (max-width: 880px) {
+  .work-case-grid { grid-template-columns: 1fr; gap: 36px; }
+  .work-case:nth-child(even) .work-mockup-wrap { order: 0; }
+  .work-case { padding: 70px 0; }
+}
+
+.work-mockup-wrap {
+  width: 100%;
+}
+.work-mockup-wrap .browser-mockup {
+  transform: rotate(-1deg);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.work-mockup-wrap .browser-mockup:hover {
+  transform: rotate(0deg) translateY(-4px);
+  box-shadow: 0 8px 16px rgba(15, 31, 36, 0.08), 0 32px 64px rgba(15, 31, 36, 0.12);
+}
+
+.work-content .work-number {
+  font-family: 'Fraunces', serif;
+  font-size: 56px;
+  font-weight: 400;
+  color: var(--accent-warm);
+  line-height: 1;
+  margin-bottom: 12px;
+  font-style: italic;
+  opacity: 0.85;
+}
+.work-content .work-tag {
+  display: inline-block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--accent);
+  font-weight: 600;
+  background: rgba(26, 77, 92, 0.08);
+  padding: 5px 12px;
+  border-radius: 999px;
+  margin-bottom: 16px;
+}
+.work-content h2 {
+  font-size: clamp(28px, 3.5vw, 38px);
+  margin-bottom: 10px;
+}
+.work-content .work-meta {
+  font-size: 13.5px;
+  color: var(--muted);
+  margin-bottom: 22px;
+  letter-spacing: 0.01em;
+}
+.work-content p {
+  font-size: 16px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+.work-points-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent-warm);
+  font-weight: 600;
+  margin-top: 26px;
+  margin-bottom: 10px;
+}
+.work-points {
+  list-style: none;
+  margin-bottom: 26px;
+}
+.work-points li {
+  position: relative;
+  padding: 9px 0 9px 24px;
+  font-size: 14.5px;
+  color: var(--ink);
+  border-bottom: 1px solid var(--line);
+}
+.work-points li:last-child { border-bottom: none; }
+.work-points li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 17px;
+  width: 12px; height: 1.5px;
+  background: var(--accent-warm);
+}
+.work-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.work-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  background: var(--bg-alt);
+  transition: all 0.2s ease;
+}
+.work-link:hover {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
+.work-link.primary {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
+.work-link.primary:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.work-link::after {
+  content: '↗';
+  font-size: 13px;
+  transition: transform 0.2s ease;
+}
+.work-link:hover::after { transform: translate(2px, -2px); }
+
+/* Upwork roster — different visual treatment for the final entry */
+.work-roster {
+  padding: 110px 0;
+  background: var(--ink);
+  color: var(--bg);
+  text-align: center;
+  border-top: 1px solid var(--line);
+}
+.work-roster .work-number {
+  font-family: 'Fraunces', serif;
+  font-size: 56px;
+  font-weight: 400;
+  color: var(--accent-warm);
+  line-height: 1;
+  margin-bottom: 12px;
+  font-style: italic;
+  opacity: 0.95;
+}
+.work-roster .work-tag {
+  display: inline-block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--accent-warm);
+  font-weight: 600;
+  background: rgba(232, 213, 177, 0.12);
+  padding: 5px 14px;
+  border-radius: 999px;
+  margin-bottom: 18px;
+}
+.work-roster h2 {
+  color: var(--bg);
+  font-size: clamp(32px, 4.5vw, 44px);
+  margin-bottom: 12px;
+  max-width: 760px;
+  margin-left: auto; margin-right: auto;
+}
+.work-roster .work-meta {
+  font-size: 13.5px;
+  color: rgba(250, 248, 244, 0.55);
+  margin-bottom: 40px;
+}
+.roster-stats {
+  display: flex;
+  justify-content: center;
+  gap: 64px;
+  flex-wrap: wrap;
+  padding: 36px 0;
+  margin: 0 auto 36px;
+  max-width: 760px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.roster-stat .num {
+  font-family: 'Fraunces', serif;
+  font-size: 48px;
+  color: var(--accent-warm);
+  line-height: 1;
+  margin-bottom: 8px;
+  font-weight: 400;
+}
+.roster-stat .label {
+  font-size: 12.5px;
+  color: rgba(250, 248, 244, 0.65);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.work-roster p {
+  font-size: 16px;
+  color: rgba(250, 248, 244, 0.78);
+  line-height: 1.7;
+  max-width: 640px;
+  margin: 0 auto 18px;
+}
+.work-roster .btn-primary {
+  background: var(--accent-warm);
+  color: var(--ink);
+  margin-top: 12px;
+}
+.work-roster .btn-primary:hover {
+  background: var(--bg);
+  color: var(--ink);
+}
+@media (max-width: 600px) {
+  .roster-stats { gap: 32px; }
+  .roster-stat .num { font-size: 36px; }
 }
