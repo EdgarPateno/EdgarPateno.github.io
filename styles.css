@@ -1479,3 +1479,101 @@ footer {
   .exp-pillars { grid-template-columns: 1fr; gap: 16px; }
   .exp-pillars-section, .exp-timeline-section { padding: 70px 0; }
 }
+
+/* ===== HOMEPAGE — HOW I WORK ===== */
+.process-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  margin-top: 56px;
+  position: relative;
+}
+.process-step {
+  position: relative;
+  padding: 32px 26px 30px;
+  background: var(--bg-alt);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.process-step:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-warm-soft);
+  box-shadow: var(--shadow);
+}
+.process-step::after {
+  content: '→';
+  position: absolute;
+  top: 50%;
+  right: -16px;
+  transform: translateY(-50%);
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 22px;
+  color: var(--accent-warm);
+  background: var(--bg);
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  z-index: 2;
+}
+.process-step:last-child::after { display: none; }
+.process-step-num {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  color: var(--accent-warm);
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+.process-step h3 {
+  font-size: 22px;
+  margin-bottom: 4px;
+}
+.process-step-meta {
+  font-size: 12.5px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 14px;
+  font-weight: 500;
+}
+.process-step > p {
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  line-height: 1.65;
+  margin-bottom: 16px;
+}
+.process-step-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+}
+.process-step-list li {
+  position: relative;
+  padding-left: 16px;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  margin-bottom: 6px;
+}
+.process-step-list li:last-child { margin-bottom: 0; }
+.process-step-list li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 9px;
+  width: 6px; height: 1.5px;
+  background: var(--accent-warm);
+}
+@media (max-width: 980px) {
+  .process-grid { grid-template-columns: repeat(2, 1fr); gap: 20px 22px; }
+  .process-step:nth-child(2)::after { display: none; }
+}
+@media (max-width: 600px) {
+  .process-grid { grid-template-columns: 1fr; gap: 16px; }
+  .process-step::after { display: none; }
+}
