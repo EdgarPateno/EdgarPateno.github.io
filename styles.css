@@ -1156,6 +1156,10 @@ footer {
   transform: rotate(0deg) translateY(-4px);
   box-shadow: 0 8px 16px rgba(15, 31, 36, 0.08), 0 32px 64px rgba(15, 31, 36, 0.12);
 }
+/* Square (1:1) mockup body for the work page screenshots */
+.work-mockup-wrap .browser-content {
+  aspect-ratio: 1 / 1;
+}
 
 .work-content .work-number {
   font-family: 'Fraunces', serif;
