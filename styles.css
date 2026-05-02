@@ -379,7 +379,7 @@ nav.scrolled { border-bottom-color: var(--line); }
 .browser-content img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: top;
   display: block;
 }
