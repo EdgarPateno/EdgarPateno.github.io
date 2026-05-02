@@ -379,9 +379,26 @@ nav.scrolled { border-bottom-color: var(--line); }
 .browser-content img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: top;
+  object-fit: cover;
+  object-position: top center;
   display: block;
+  transition: object-position 5.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-visual .browser-mockup:hover .browser-content img,
+.hero-visual .browser-mockup:focus-within .browser-content img {
+  object-position: bottom center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .browser-content img {
+    transition: none;
+  }
+
+  .hero-visual .browser-mockup:hover .browser-content img,
+  .hero-visual .browser-mockup:focus-within .browser-content img {
+    object-position: top center;
+  }
 }
 
 @media (max-width: 880px) {
