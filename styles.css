@@ -382,7 +382,7 @@ nav.scrolled { border-bottom-color: var(--line); }
   object-fit: cover;
   object-position: top center;
   display: block;
-  transition: object-position 5.5s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: object-position 80s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .hero-visual .browser-mockup:hover .browser-content img,
