@@ -432,7 +432,29 @@ section { padding: 100px 0; position: relative; }
   margin-bottom: 20px;
   line-height: 1.75;
 }
-@media (max-width: 880px) { .about-grid { grid-template-columns: 1fr; gap: 32px; } }
+.about-photo {
+  position: relative;
+  width: 100%;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  background: var(--bg-alt);
+}
+.about-photo img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.about-text .section-eyebrow {
+  margin-bottom: 16px;
+}
+.about-text .section-title {
+  margin-bottom: 32px;
+}
+@media (max-width: 880px) {
+  .about-grid { grid-template-columns: 1fr; gap: 36px; }
+  .about-photo { max-width: 420px; margin: 0 auto; }
+}
 
 /* ===== SKILLS ===== */
 .skills-grid {
