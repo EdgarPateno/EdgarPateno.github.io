@@ -427,6 +427,80 @@
     </div>
   </section>
 
+  <!-- AUDIT + CALL OFFER -->
+  <section id="offer">
+    <div class="container">
+      <div class="offer-intro reveal">
+        <div class="section-eyebrow">Try me before you hire me</div>
+        <h2 class="section-title">Two ways to get <em>started</em>.</h2>
+        <p class="section-intro">Both free. Both no-obligation. Pick the one that fits your week.</p>
+      </div>
+
+      <div class="offer-cards">
+
+        <!-- 01 — FREE AUDIT -->
+        <div class="offer-card primary reveal">
+          <span class="offer-tag">Free · 24-hr turnaround</span>
+          <div class="offer-num">01</div>
+          <h3>Free Shopify audit</h3>
+          <p>Send me your store URL. I'll record a 5–10 minute Loom walking through your storefront and the five
+            highest-impact fixes I'd ship first.</p>
+          <ul class="offer-list">
+            <li>Personalized Loom video</li>
+            <li>Top 5 fixes, ranked by impact</li>
+            <li>24-hour turnaround</li>
+            <li>No sales pitch attached</li>
+          </ul>
+          <form id="audit-form" class="audit-form" action="https://formspree.io/f/xqenebzn" method="POST">
+            <div class="audit-fields">
+              <div class="form-field">
+                <label for="audit-url">Store URL</label>
+                <input id="audit-url" name="url" type="url" required placeholder="https://yourstore.com" />
+              </div>
+              <div class="form-field">
+                <label for="audit-email">Your email</label>
+                <input id="audit-email" name="email" type="email" required placeholder="you@email.com" />
+              </div>
+            </div>
+
+            <!-- Honeypot for spam bots -->
+            <div class="hp-field" aria-hidden="true">
+              <label>Don't fill this out: <input name="_gotcha" type="text" tabindex="-1" autocomplete="off" /></label>
+            </div>
+
+            <input type="hidden" name="_subject" value="New Free Audit Request — edgarpateno.github.io" />
+
+            <button type="submit" class="btn btn-primary" id="audit-btn">Get my free audit →</button>
+
+            <div class="audit-message" id="audit-message" role="status" aria-live="polite"></div>
+          </form>
+        </div>
+
+        <!-- 02 — BOOK A CALL -->
+        <div class="offer-card reveal">
+          <span class="offer-tag">30 min · Zoom</span>
+          <div class="offer-num">02</div>
+          <h3>Book a discovery call</h3>
+          <p>30 minutes on Zoom. Bring your store, your goals, and the friction you're hitting. We'll figure out
+            together whether I'm the right person — honest yes or no.</p>
+          <ul class="offer-list">
+            <li>30-minute Zoom call</li>
+            <li>A clear next step</li>
+            <li>An honest yes or no</li>
+            <li>Slots within 48 hours</li>
+          </ul>
+          <a href="https://calendly.com/edgarpateno" target="_blank" rel="noopener noreferrer"
+            class="btn btn-secondary offer-call-cta">Book a call →</a>
+        </div>
+
+      </div>
+
+      <div class="offer-foot reveal">
+        <p>If neither fits, my inbox is open: <a href="mailto:edgarpateno80@gmail.com">edgarpateno80@gmail.com</a></p>
+      </div>
+    </div>
+  </section>
+
   <!-- TOOLS -->
   <section id="tools">
     <div class="container">
@@ -589,6 +663,48 @@
           navToggle.classList.remove('active');
           navToggle.setAttribute('aria-expanded', 'false');
         });
+      });
+    }
+
+    // Free audit form — Formspree AJAX submission, stays on page
+    const auditForm = document.getElementById('audit-form');
+    const auditBtn = document.getElementById('audit-btn');
+    const auditMsg = document.getElementById('audit-message');
+    if (auditForm && auditBtn && auditMsg) {
+      auditForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        auditMsg.className = 'audit-message';
+        auditMsg.textContent = '';
+        auditBtn.disabled = true;
+        auditBtn.textContent = 'Sending…';
+
+        try {
+          const data = new FormData(auditForm);
+          const res = await fetch(auditForm.action, {
+            method: 'POST',
+            body: data,
+            headers: { 'Accept': 'application/json' }
+          });
+
+          if (res.ok) {
+            auditForm.reset();
+            auditMsg.className = 'audit-message success';
+            auditMsg.textContent = 'Got it. Your audit will land in your inbox within 24 hours.';
+            auditBtn.textContent = 'Sent ✓';
+          } else {
+            const json = await res.json().catch(() => ({}));
+            const errText = (json.errors && json.errors.map(x => x.message).join(', ')) || 'Something went wrong. Please email me directly at edgarpateno80@gmail.com.';
+            auditMsg.className = 'audit-message error';
+            auditMsg.textContent = errText;
+            auditBtn.disabled = false;
+            auditBtn.textContent = 'Get my free audit →';
+          }
+        } catch (err) {
+          auditMsg.className = 'audit-message error';
+          auditMsg.textContent = 'Network issue. Please try again — or email edgarpateno80@gmail.com.';
+          auditBtn.disabled = false;
+          auditBtn.textContent = 'Get my free audit →';
+        }
       });
     }
 
