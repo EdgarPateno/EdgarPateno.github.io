@@ -756,6 +756,106 @@
 
       updateUi();
     });
+
+    // Count-up animation for .upwork-stats
+    (function () {
+      const statsSection = document.querySelector('.upwork-stats');
+      if (!statsSection) return;
+      const nums = Array.from(statsSection.querySelectorAll('.upwork-stat-num'));
+      const parsed = nums.map((el) => {
+        const text = el.textContent.trim();
+        const m = text.match(/^(\D*)(\d[\d,]*)(\D*)$/);
+        if (!m) return null;
+        const [, prefix, rawNum, suffix] = m;
+        const useCommas = rawNum.includes(',');
+        const target = parseInt(rawNum.replace(/,/g, ''), 10);
+        return { el, prefix, target, suffix, useCommas };
+      }).filter(Boolean);
+
+      function fmt(n, useCommas) {
+        return useCommas ? n.toLocaleString('en-US') : String(n);
+      }
+      function ease(t) { return 1 - Math.pow(1 - t, 3); }
+
+      function runCountUp() {
+        const duration = 1800;
+        const start = performance.now();
+        (function tick(now) {
+          const p = Math.min((now - start) / duration, 1);
+          const e = ease(p);
+          parsed.forEach(({ el, prefix, target, suffix, useCommas }) => {
+            el.textContent = prefix + fmt(Math.round(e * target), useCommas) + suffix;
+          });
+          if (p < 1) requestAnimationFrame(tick);
+        })(start);
+      }
+
+      const statsObs = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          statsObs.disconnect();
+          runCountUp();
+        }
+      }, { threshold: 0.25 });
+      statsObs.observe(statsSection);
+    })();
+
+    // Count-up animation for #results .result-num
+    (function () {
+      const resultsGrid = document.querySelector('#results .results-grid');
+      if (!resultsGrid) return;
+      const SCALES = { K: 1e3, k: 1e3, M: 1e6, m: 1e6 };
+      const nums = Array.from(resultsGrid.querySelectorAll('.result-num'));
+      const parsed = nums.map((el) => {
+        const textNode = Array.from(el.childNodes).find((n) => n.nodeType === Node.TEXT_NODE);
+        if (!textNode) return null;
+        const text = textNode.nodeValue.trim();
+        const m = text.match(/^(\D*)(\d[\d,]*)(\D*)$/);
+        if (!m) return null;
+        const [, prefix, rawNum, rawSuffix] = m;
+        const useCommas = rawNum.includes(',');
+        let target = parseInt(rawNum.replace(/,/g, ''), 10);
+        let scaleChar = '', scaleFactor = 1, suffix = rawSuffix;
+        const scalePart = rawSuffix.match(/^([KkMm])(.*)/);
+        if (scalePart) {
+          scaleChar = scalePart[1];
+          scaleFactor = SCALES[scaleChar];
+          suffix = scalePart[2];
+          target *= scaleFactor;
+        }
+        return { textNode, prefix, target, suffix, useCommas, scaleChar, scaleFactor };
+      }).filter(Boolean);
+
+      function fmt(n, stat) {
+        if (stat.scaleChar) {
+          const v = n / stat.scaleFactor;
+          return parseFloat(v.toFixed(1)) + stat.scaleChar + stat.suffix;
+        }
+        return stat.useCommas ? n.toLocaleString('en-US') : String(n);
+      }
+      function ease(t) { return 1 - Math.pow(1 - t, 3); }
+
+      function runCountUp() {
+        const duration = 1800;
+        const start = performance.now();
+        (function tick(now) {
+          const p = Math.min((now - start) / duration, 1);
+          const e = ease(p);
+          parsed.forEach((stat) => {
+            const n = Math.round(e * stat.target);
+            stat.textNode.nodeValue = stat.prefix + fmt(n, stat) + (stat.scaleChar ? '' : stat.suffix);
+          });
+          if (p < 1) requestAnimationFrame(tick);
+        })(start);
+      }
+
+      const resultsObs = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          resultsObs.disconnect();
+          runCountUp();
+        }
+      }, { threshold: 0.25 });
+      resultsObs.observe(resultsGrid);
+    })();
   </script>
 
 </body>
