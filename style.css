@@ -385,10 +385,26 @@ em { font-style: italic; color: var(--accent); }
   background: var(--surface);
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
-  padding: 16px 0;
-  text-align: center;
+  padding: 14px 0;
+  overflow: hidden;
 }
-.proof-strip__text { font-size: .9rem; color: var(--muted); font-weight: 500; }
+.proof-strip__track-wrap { overflow: hidden; }
+.proof-strip__track {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+  font-size: .88rem;
+  font-weight: 600;
+  color: var(--accent);
+  white-space: nowrap;
+}
+.proof-strip__dot {
+  color: var(--accent);
+  opacity: .4;
+  font-size: .7rem;
+}
 
 /* ─── ABOUT ──────────────────────────────────────────────── */
 .about__inner {
