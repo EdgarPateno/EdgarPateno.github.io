@@ -80,7 +80,7 @@ body {
 }
 
 /* ─── TYPOGRAPHY ─────────────────────────────────────────── */
-h1 { font-size: clamp(2.25rem, 5.6vw, 4.2rem); font-weight: 700; line-height: 1.06; letter-spacing: -.025em; }
+h1 { font-size: clamp(2.25rem, 5.2vw, 3.8rem); font-weight: 700; line-height: 1.06; letter-spacing: -.025em; }
 h2 { font-size: clamp(1.65rem, 3.6vw, 2.6rem); font-weight: 700; line-height: 1.15; letter-spacing: -.02em; }
 h3 { font-size: 1.2rem; font-weight: 600; line-height: 1.3; letter-spacing: -.01em; }
 em {
@@ -384,8 +384,8 @@ em {
 }
 .hero__inner {
   display: grid;
-  grid-template-columns: 1fr 460px;
-  gap: 64px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 560px);
+  gap: 56px;
   align-items: center;
 }
 .hero__badge   { margin-bottom: 24px; }
@@ -424,29 +424,69 @@ em {
 }
 .hero__stat-label { font-size: .76rem; color: var(--muted); }
 .hero__visual { position: relative; }
-.hero__mockup {
-  width: 100%;
-  max-height: 540px;
-  object-fit: cover;
-  object-position: top;
-  border-radius: var(--radius);
+
+/* ─── BROWSER MOCKUP (auto-scrolling page) ────────────────── */
+.browser {
+  margin: 0;
   border: 1px solid var(--border);
-  transition: object-position 15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg);
+  box-shadow: var(--shadow-lg);
 }
-.hero__visual:hover .hero__mockup {
-  object-position: center bottom;
-}
-.hero__caption {
-  position: absolute;
-  bottom: -14px;
-  right: 16px;
+.browser__bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 11px 14px;
   background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.browser__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border-str);
+  flex-shrink: 0;
+}
+.browser__url {
+  flex: 1;
+  margin-left: 8px;
+  padding: 4px 14px;
+  background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 100px;
-  padding: 5px 14px;
-  font-size: .78rem;
+  font-size: .74rem;
   font-weight: 500;
   color: var(--muted);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* The window. --screen-ar is its height/width; --page-ar is the
+   screenshot's. The scroll distance is a fixed share of the image height
+   (1 - screen/page), so one percentage works at every column width. */
+.browser__screen {
+  --screen-ar: 0.75;
+  --page-ar: 3.7067;
+  position: relative;
+  aspect-ratio: 1 / var(--screen-ar);
+  overflow: hidden;
+  background: var(--surface);
+}
+.browser__page {
+  display: block;
+  width: 100%;
+  height: auto;
+  animation: pageScroll 34s ease-in-out infinite alternate;
+}
+.browser:hover .browser__page { animation-play-state: paused; }
+
+@keyframes pageScroll {
+  from { transform: translateY(0); }
+  to   { transform: translateY(calc(-100% * (1 - var(--screen-ar) / var(--page-ar)))); }
 }
 
 /* ─── HERO (inner pages) ─────────────────────────────────── */
@@ -1154,8 +1194,8 @@ em {
 /* ─── RESPONSIVE ─────────────────────────────────────────── */
 @media (max-width: 1100px) {
   .hero__inner          { grid-template-columns: 1fr; }
-  .hero__visual         { display: block; }
-  .hero__mockup         { max-height: 280px; }
+  .hero__visual         { display: block; max-width: 560px; }
+  .browser__screen      { --screen-ar: 0.62; }
   .hero__stats          { grid-template-columns: repeat(2,1fr); }
   .about__inner         { grid-template-columns: 1fr; }
   .about__photo         { max-width: 380px; }

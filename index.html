@@ -8,7 +8,7 @@
   <meta name="description" content="Shopify developer with 10+ years experience and 100+ stores built. Custom Liquid themes, CRO, Klaviyo email automation, technical SEO and Amazon Commerce support. Currently building at Magnum Nutraceuticals.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="images/hero-magnum-browser-mockup.webp" as="image">
+  <link rel="preload" href="images/hero-magnum-fullpage.webp" as="image">
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap"></noscript>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -85,15 +85,24 @@
         </div>
       </div>
       <div class="hero__visual">
-        <img
-          src="images/hero-magnum-browser-mockup.webp"
-          alt="Magnum Nutraceuticals Shopify storefront built by Edgar Pateño"
-          class="hero__mockup"
-          fetchpriority="high"
-          width="1896"
-          height="1001"
-        >
-        <div class="hero__caption">magnumsupps.com</div>
+        <figure class="browser">
+          <div class="browser__bar" aria-hidden="true">
+            <span class="browser__dot"></span>
+            <span class="browser__dot"></span>
+            <span class="browser__dot"></span>
+            <span class="browser__url">magnumsupps.com</span>
+          </div>
+          <div class="browser__screen">
+            <img
+              src="images/hero-magnum-fullpage.webp"
+              alt="The Magnum Nutraceuticals storefront I built, scrolling from the hero through best sellers, the stack builder and customer reviews"
+              class="browser__page"
+              fetchpriority="high"
+              width="1200"
+              height="4448"
+            >
+          </div>
+        </figure>
       </div>
     </div>
   </div>
