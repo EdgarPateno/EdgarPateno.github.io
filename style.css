@@ -468,7 +468,12 @@ em {
 .proof-strip__track {
   display: flex;
   align-items: center;
-  gap: 24px;
+  /* No flex `gap` here on purpose. The track holds two identical halves and the
+     animation translates -50%. `gap` puts N-1 gaps between N items, so -50%
+     lands half a gap short of the duplicate and the strip visibly snaps back
+     (measured: 12px per cycle). Trailing margin makes every item's advance
+     width include its own spacing, so -50% is exactly one half. */
+  gap: 0;
   width: max-content;
   animation: marquee 28s linear infinite;
   font-size: .88rem;
@@ -476,6 +481,7 @@ em {
   color: var(--accent);
   white-space: nowrap;
 }
+.proof-strip__track > * { margin-right: 24px; flex-shrink: 0; }
 .proof-strip__dot {
   color: var(--accent);
   opacity: .4;
@@ -712,10 +718,13 @@ em {
 .marquee__row { display: flex; gap: 12px; margin-bottom: 12px; }
 .marquee__track {
   display: flex;
-  gap: 12px;
+  /* Same seamless-loop rule as .proof-strip__track — spacing lives on the
+     items, not in a flex gap, so translateX(-50%) lands on the duplicate. */
+  gap: 0;
   animation: marquee 35s linear infinite;
   width: max-content;
 }
+.marquee__track > * { margin-right: 12px; flex-shrink: 0; }
 .marquee__track--rev {
   animation-direction: reverse;
   animation-duration: 42s;
