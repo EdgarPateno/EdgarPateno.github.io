@@ -91,38 +91,101 @@
     document.querySelectorAll('.hero__stat-num').forEach(function (el) { cio.observe(el); });
   }
 
-  /* ── FORM VALIDATION ── */
-  document.querySelectorAll('form[data-validate]').forEach(function (form) {
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
+  /* ── FORM VALIDATION + SUBMIT ── */
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-      /* honeypot check */
-      var hp = form.querySelector('[name="website"]');
-      if (hp && hp.value) return;
+  function fieldValid(field) {
+    var val = field.value.trim();
+    if (!val) return false;
+    if (field.type === 'email' && !EMAIL_RE.test(val)) return false;
+    return true;
+  }
+
+  document.querySelectorAll('form[data-validate]').forEach(function (form) {
+    var sending = false;
+    var successEl = form.dataset.success ? document.getElementById(form.dataset.success) : null;
+    var failEl    = form.dataset.fail    ? document.getElementById(form.dataset.fail)    : null;
+    var submitBtn = form.querySelector('[type="submit"]');
+    var btnLabel  = submitBtn ? submitBtn.textContent : '';
+
+    function showFail() {
+      if (failEl) {
+        failEl.hidden = false;
+        failEl.scrollIntoView({ block: 'nearest' });
+      }
+    }
+    function hideFail() { if (failEl) failEl.hidden = true; }
+
+    form.addEventListener('submit', function (e) {
+      /* No fetch support: let the browser POST natively to the form action. */
+      if (typeof window.fetch !== 'function' || !form.getAttribute('action')) return;
+
+      e.preventDefault();
+      if (sending) return;
+      hideFail();
+
+      /* Honeypot — a filled hidden field means a bot. Fake success, send nothing. */
+      var hp = form.querySelector('[name="_gotcha"]');
+      if (hp && hp.value) {
+        form.style.display = 'none';
+        if (successEl) successEl.style.display = 'block';
+        return;
+      }
 
       var valid = true;
+      var firstBad = null;
       form.querySelectorAll('[required]').forEach(function (field) {
         var grp = field.closest('.form__group');
-        if (!field.value.trim()) {
+        if (!fieldValid(field)) {
           valid = false;
+          if (!firstBad) firstBad = field;
           if (grp) grp.classList.add('error');
-        } else {
-          if (grp) grp.classList.remove('error');
+        } else if (grp) {
+          grp.classList.remove('error');
         }
       });
 
-      if (valid) {
-        form.style.display = 'none';
-        var successId = form.dataset.success;
-        var success = successId ? document.getElementById(successId) : null;
-        if (success) success.style.display = 'block';
+      if (!valid) {
+        if (firstBad) firstBad.focus();
+        return;
       }
+
+      sending = true;
+      if (submitBtn) {
+        submitBtn.setAttribute('aria-busy', 'true');
+        submitBtn.textContent = 'Sending…';
+      }
+
+      fetch(form.getAttribute('action'), {
+        method: (form.getAttribute('method') || 'POST').toUpperCase(),
+        body: new FormData(form),
+        headers: { Accept: 'application/json' }
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          form.style.display = 'none';
+          if (successEl) {
+            successEl.style.display = 'block';
+            successEl.scrollIntoView({ block: 'nearest' });
+          }
+        })
+        .catch(function () {
+          showFail();
+        })
+        .then(function () {
+          sending = false;
+          if (submitBtn) {
+            submitBtn.removeAttribute('aria-busy');
+            submitBtn.textContent = btnLabel;
+          }
+        });
     });
 
     form.querySelectorAll('input,textarea,select').forEach(function (f) {
       f.addEventListener('input', function () {
         var grp = f.closest('.form__group');
         if (grp) grp.classList.remove('error');
+        hideFail();
       });
     });
   });

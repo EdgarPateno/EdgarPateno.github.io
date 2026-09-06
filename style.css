@@ -686,6 +686,27 @@ em {
 .form__success h2 { color: var(--accent); margin-bottom: 8px; font-size: 1.3rem; }
 .form__success p  { color: var(--muted); }
 
+/* Form-level failure banner (network / server error) */
+.form__fail {
+  margin-bottom: 20px;
+  padding: 16px 18px;
+  border: 1px solid rgba(201,37,45,.28);
+  border-left: 3px solid #C9252D;
+  border-radius: var(--radius);
+  background: #FDF3F3;
+}
+.form__fail p { font-size: .93rem; line-height: 1.6; color: #7A1319; margin: 0; }
+.form__fail a { color: #C9252D; text-decoration: underline; font-weight: 600; }
+.form__fail a:hover { color: #7A1319; }
+
+/* In-flight submit state — never uses [disabled], so the button stays
+   focusable and screen readers keep announcing it. */
+.btn[aria-busy="true"] {
+  opacity: .72;
+  cursor: progress;
+  pointer-events: none;
+}
+
 /* ─── MARQUEE ────────────────────────────────────────────── */
 .marquee { overflow: hidden; }
 .marquee__row { display: flex; gap: 12px; margin-bottom: 12px; }

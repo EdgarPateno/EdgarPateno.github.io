@@ -58,9 +58,19 @@
       <!-- FORM -->
       <div class="fi">
         <div class="form-wrapper">
-          <form data-validate novalidate data-success="contact-success" id="contact-form">
+          <form
+            id="contact-form"
+            class="form"
+            action="https://formspree.io/f/mjgjqerj"
+            method="POST"
+            data-validate
+            data-success="contact-success"
+            data-fail="contact-fail"
+            novalidate
+          >
             <!-- honeypot -->
-            <input name="website" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true">
+            <input name="_gotcha" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true">
+            <input type="hidden" name="_subject" value="New enquiry from edgarpateno.github.io">
 
             <div class="form__group">
               <label for="c-name" class="form__label form__label--req">Name</label>
@@ -133,6 +143,12 @@
             <button type="submit" class="btn btn--primary btn--full btn--lg">Send message →</button>
             <p class="form__fine">By sending, you agree I'll use your details only to reply.</p>
           </form>
+          <div class="form__fail" id="contact-fail" role="alert" hidden>
+            <p><strong>That didn't send.</strong> Something went wrong on the way to my inbox
+            &mdash; please email me directly at
+            <a href="mailto:edgarpateno80@gmail.com">edgarpateno80@gmail.com</a>
+            or message <a href="https://wa.me/639311260820" target="_blank" rel="noopener">WhatsApp +63&nbsp;931&nbsp;126&nbsp;0820</a>.</p>
+          </div>
           <div class="form__success" id="contact-success">
             <h2>Message sent!</h2>
             <p>Thanks for reaching out. I'll reply within one business day.</p>
