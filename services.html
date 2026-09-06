@@ -3,22 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Skills — Edgar Pateño | Shopify Developer</title>
-  <meta name="description" content="Eight disciplines built over a decade: Shopify theme development, CRO, Klaviyo email, technical SEO, B2B setup, 3PL coordination, app integration, and customer support.">
+  <title>Services — Edgar Pateño | Shopify &amp; Amazon Commerce Specialist</title>
+  <meta name="description" content="Two tracks of eCommerce work: eight Shopify disciplines — theme development, CRO, Klaviyo, apps, technical SEO, B2B, 3PL, support — plus eleven Amazon Commerce capabilities across listings, PPC, Seller Central, and order operations.">
+  <meta name="theme-color" content="#FFFFFF">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap"></noscript>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+<a href="#main" class="skip-link">Skip to content</a>
 
 <!-- ── NAV ────────────────────────────────────────────────── -->
 <header class="nav" id="nav">
   <div class="container nav__inner">
     <a href="index.html" class="nav__logo">Edgar Pateño</a>
     <nav class="nav__links" aria-label="Main navigation">
-      <a href="skills.html" class="nav__link">Skills</a>
+      <a href="services.html" class="nav__link">Services</a>
       <a href="work.html" class="nav__link">Work</a>
       <a href="experience.html" class="nav__link">Experience</a>
     </nav>
@@ -28,7 +32,7 @@
     </button>
   </div>
   <div class="nav__mobile" role="navigation" aria-label="Mobile navigation">
-    <a href="skills.html" class="nav__link">Skills</a>
+    <a href="services.html" class="nav__link">Services</a>
     <a href="work.html" class="nav__link">Work</a>
     <a href="experience.html" class="nav__link">Experience</a>
     <a href="https://calendly.com/edgarpateno" class="btn btn--primary" target="_blank" rel="noopener">Book a Free Call →</a>
@@ -36,18 +40,31 @@
 </header>
 
 <!-- ── HERO ───────────────────────────────────────────────── -->
-<section class="hero hero--inner">
+<section class="hero hero--inner" id="main">
   <div class="container">
-    <div class="sec-label fi"><span class="pill">Skills</span></div>
-    <h1 class="fi fi-d1" style="margin-bottom:20px">What I bring to a store.</h1>
+    <div class="sec-label fi"><span class="pill">Services</span></div>
+    <h1 class="fi fi-d1" style="margin-bottom:20px">What I do for <em>Shopify and Amazon</em> sellers.</h1>
     <p class="sec-sub fi fi-d2">
-      Eight disciplines I've spent the last decade building, breaking, and rebuilding — from a half-finished theme on a developer store to the email flow that recovers a cart.
+      Two tracks of work. Shopify is the deep one — a decade of storefronts built, broken, and rebuilt, from a blank theme to the email flow that recovers a cart. Amazon is the second channel most of those brands eventually need.
     </p>
   </div>
 </section>
 
-<!-- ── SKILLS ─────────────────────────────────────────────── -->
+<!-- ── TRACK 1 · SHOPIFY & ECOMMERCE ──────────────────────── -->
 <div style="border-top:1px solid var(--border)">
+
+  <div class="track" style="padding-top:64px">
+    <div class="container">
+      <div class="track__head fi">
+        <span class="track__badge" aria-hidden="true">S</span>
+        <div class="track__titles">
+          <h2 class="track__title">Shopify &amp; eCommerce</h2>
+          <p class="track__sub">Build the storefront, grow it, and run the operation behind it.</p>
+        </div>
+        <span class="track__count">8 disciplines</span>
+      </div>
+    </div>
+  </div>
 
   <!-- 01 Theme Development -->
   <div class="skill-block">
@@ -55,7 +72,7 @@
       <div class="skill-block__inner">
         <div class="skill-block__visual fi">
           <img
-            src="https://edgarpateno.github.io/images/shopify-theme-development.webp"
+            src="images/shopify-theme-development.webp"
             alt="Shopify theme development — custom Liquid code editor"
             class="skill-block__img"
             loading="lazy"
@@ -65,7 +82,7 @@
         </div>
         <div class="skill-block__content fi fi-d1">
           <span class="skill-block__num">01</span>
-          <h2 class="skill-block__title">Theme Development</h2>
+          <h3 class="skill-block__title">Theme Development</h3>
           <p class="skill-block__body">
             Custom Shopify themes built from scratch in Liquid, HTML, CSS, and JavaScript — performance-tuned around Core Web Vitals so they don't just look good, they rank and convert.
           </p>
@@ -86,7 +103,7 @@
       <div class="skill-block__inner">
         <div class="skill-block__visual fi">
           <img
-            src="https://edgarpateno.github.io/images/shopify-ui-ux-cro.webp"
+            src="images/shopify-ui-ux-cro.webp"
             alt="UX and CRO — heatmap and A/B test results"
             class="skill-block__img"
             loading="lazy"
@@ -96,7 +113,7 @@
         </div>
         <div class="skill-block__content fi fi-d1">
           <span class="skill-block__num">02</span>
-          <h2 class="skill-block__title">UX/UI &amp; Conversion Rate Optimization</h2>
+          <h3 class="skill-block__title">UX/UI &amp; Conversion Rate Optimization</h3>
           <p class="skill-block__body">
             Conversion-focused design rooted in customer behavior — wireframes that respect the funnel, copy that earns the click, and A/B tests that prove it.
           </p>
@@ -117,7 +134,7 @@
       <div class="skill-block__inner">
         <div class="skill-block__visual fi">
           <img
-            src="https://edgarpateno.github.io/images/klaviyo-dashboard.webp"
+            src="images/klaviyo-dashboard.webp"
             alt="Klaviyo email dashboard showing flow performance"
             class="skill-block__img"
             loading="lazy"
@@ -127,7 +144,7 @@
         </div>
         <div class="skill-block__content fi fi-d1">
           <span class="skill-block__num">03</span>
-          <h2 class="skill-block__title">Klaviyo Email Flows &amp; Campaigns</h2>
+          <h3 class="skill-block__title">Klaviyo Email Flows &amp; Campaigns</h3>
           <p class="skill-block__body">
             Welcome, abandoned cart, post-purchase, browse abandonment, and win-back flows that respect your customer's inbox and earn their next order.
           </p>
@@ -148,7 +165,7 @@
       <div class="skill-block__inner">
         <div class="skill-block__visual fi">
           <img
-            src="https://edgarpateno.github.io/images/shopify-apps.webp"
+            src="images/shopify-apps.webp"
             alt="Shopify apps dashboard — integration and performance"
             class="skill-block__img"
             loading="lazy"
@@ -158,7 +175,7 @@
         </div>
         <div class="skill-block__content fi fi-d1">
           <span class="skill-block__num">04</span>
-          <h2 class="skill-block__title">App Integration &amp; Customization</h2>
+          <h3 class="skill-block__title">App Integration &amp; Customization</h3>
           <p class="skill-block__body">
             Apps are leverage — but bloat is real. I vet every integration for performance impact, customize outputs to match the theme, and rip out the dead code that lingers after uninstalls.
           </p>
@@ -166,6 +183,7 @@
             <li>App selection based on real-world performance, not feature lists</li>
             <li>Custom Liquid integrations for off-the-shelf apps</li>
             <li>Storefront speed audits after every install</li>
+            <li>Lovable Dev for fast working prototypes before a build is committed to</li>
             <li>Custom builds when no app fits the workflow</li>
           </ul>
         </div>
@@ -179,7 +197,7 @@
       <div class="skill-block__inner">
         <div class="skill-block__visual fi">
           <img
-            src="https://edgarpateno.github.io/images/shopify-seo.webp"
+            src="images/shopify-seo.webp"
             alt="Shopify SEO — Google Search Console performance report"
             class="skill-block__img"
             loading="lazy"
@@ -189,7 +207,7 @@
         </div>
         <div class="skill-block__content fi fi-d1">
           <span class="skill-block__num">05</span>
-          <h2 class="skill-block__title">Technical &amp; On-Page SEO</h2>
+          <h3 class="skill-block__title">Technical &amp; On-Page SEO</h3>
           <p class="skill-block__body">
             Site structure, schema markup, and Core Web Vitals — the unsexy work that makes your storefront discoverable. I run audits in Search Console and Analytics, then ship the fixes.
           </p>
@@ -210,7 +228,7 @@
       <div class="skill-block__inner">
         <div class="skill-block__visual fi">
           <img
-            src="https://edgarpateno.github.io/images/shopify-b2b.webp"
+            src="images/shopify-b2b.webp"
             alt="Shopify B2B — wholesale portal with tiered pricing"
             class="skill-block__img"
             loading="lazy"
@@ -220,7 +238,7 @@
         </div>
         <div class="skill-block__content fi fi-d1">
           <span class="skill-block__num">06</span>
-          <h2 class="skill-block__title">B2B &amp; Affiliate Programs</h2>
+          <h3 class="skill-block__title">B2B &amp; Affiliate Programs</h3>
           <p class="skill-block__body">
             New revenue channels without a second store — wholesale storefronts, custom pricing tiers, gated catalogs, and affiliate programs that pay out cleanly.
           </p>
@@ -241,7 +259,7 @@
       <div class="skill-block__inner">
         <div class="skill-block__visual fi">
           <img
-            src="https://edgarpateno.github.io/images/3pl-fulfillment.webp"
+            src="images/3pl-fulfillment.webp"
             alt="3PL fulfillment — warehouse inventory and logistics"
             class="skill-block__img"
             loading="lazy"
@@ -251,7 +269,7 @@
         </div>
         <div class="skill-block__content fi fi-d1">
           <span class="skill-block__num">07</span>
-          <h2 class="skill-block__title">Fulfillment &amp; 3PL Coordination</h2>
+          <h3 class="skill-block__title">Fulfillment &amp; 3PL Coordination</h3>
           <p class="skill-block__body">
             The work that happens after the order — inventory sync, shipping rates, customs, and the messy middle when something goes wrong. Storefronts only feel premium if the package shows up clean.
           </p>
@@ -272,7 +290,7 @@
       <div class="skill-block__inner">
         <div class="skill-block__visual fi">
           <img
-            src="https://edgarpateno.github.io/images/customer-support.webp"
+            src="images/customer-support.webp"
             alt="Customer support operations — help desk and ticket management"
             class="skill-block__img"
             loading="lazy"
@@ -282,7 +300,7 @@
         </div>
         <div class="skill-block__content fi fi-d1">
           <span class="skill-block__num">08</span>
-          <h2 class="skill-block__title">Customer Support Operations</h2>
+          <h3 class="skill-block__title">Customer Support Operations</h3>
           <p class="skill-block__body">
             A decade of email, chat, and dispute work — the part of the business that turns one-time buyers into repeat customers. I set up the help desk and answer the tickets.
           </p>
@@ -299,12 +317,71 @@
 
 </div>
 
+<!-- ── TRACK 2 · AMAZON COMMERCE ──────────────────────────── -->
+<section class="section" style="border-top:1px solid var(--border)">
+  <div class="container">
+    <div class="track">
+      <div class="track__head fi">
+        <span class="track__badge" aria-hidden="true">A</span>
+        <div class="track__titles">
+          <h2 class="track__title">Amazon Commerce</h2>
+          <p class="track__sub">Listings, ad spend, and Seller Central — the second channel, run properly.</p>
+        </div>
+        <span class="track__count">11 capabilities</span>
+      </div>
+
+      <div class="svc-grid">
+
+        <div class="fi svc-card">
+          <div class="svc-card__num">01</div>
+          <h3 class="svc-card__title">Research &amp; Listings</h3>
+          <ul class="svc-card__list">
+            <li>Product research</li>
+            <li>Competitor and keyword research</li>
+            <li>Listing optimization</li>
+            <li>Product pricing and catalog updates</li>
+          </ul>
+        </div>
+
+        <div class="fi fi-d1 svc-card">
+          <div class="svc-card__num">02</div>
+          <h3 class="svc-card__title">Advertising &amp; PPC</h3>
+          <ul class="svc-card__list">
+            <li>Advertising strategy</li>
+            <li>Amazon PPC campaign support</li>
+          </ul>
+        </div>
+
+        <div class="fi fi-d2 svc-card">
+          <div class="svc-card__num">03</div>
+          <h3 class="svc-card__title">Seller Central &amp; Fulfillment</h3>
+          <ul class="svc-card__list">
+            <li>Seller Central management</li>
+            <li>FBA and FBM operations support</li>
+          </ul>
+        </div>
+
+        <div class="fi fi-d3 svc-card">
+          <div class="svc-card__num">04</div>
+          <h3 class="svc-card__title">Inventory &amp; Order Ops</h3>
+          <ul class="svc-card__list">
+            <li>Inventory and fulfillment coordination</li>
+            <li>Order, customer, and seller support</li>
+            <li>Performance monitoring</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ── CTA ─────────────────────────────────────────────────── -->
 <section class="section section--dark">
   <div class="container cta-center">
     <h2 class="cta-center__title fi">Let's pick the right ones for your store.</h2>
     <p class="cta-center__body fi fi-d1">
-      Not every project needs all eight. Send me a note about what you're working on — I'll tell you what I'd actually do first.
+      No brand needs all nineteen. Send me a note about what you're working on — on Shopify, on Amazon, or both — and I'll tell you what I'd actually do first.
     </p>
     <a href="contact.html" class="btn btn--primary btn--lg fi fi-d2">Start the conversation →</a>
   </div>
@@ -325,19 +402,21 @@
       <div>
         <div class="footer__col-title">Services</div>
         <ul class="footer__list">
-          <li>Shopify Theme Development (Liquid)</li>
-          <li>CRO</li>
-          <li>Klaviyo Email Automation</li>
-          <li>Technical SEO &amp; Core Web Vitals</li>
-          <li>B2B &amp; Affiliate Program Setup</li>
-          <li>Store Operations &amp; Customer Support</li>
-          <li>Lovable Development</li>
+          <li><a href="services.html">Shopify Theme Development (Liquid)</a></li>
+          <li><a href="services.html">CRO</a></li>
+          <li><a href="services.html">Klaviyo Email Automation</a></li>
+          <li><a href="services.html">Technical SEO &amp; Core Web Vitals</a></li>
+          <li><a href="services.html">B2B &amp; Affiliate Program Setup</a></li>
+          <li><a href="services.html">Store Operations &amp; Customer Support</a></li>
+          <li><a href="services.html">Lovable Development</a></li>
+          <li><a href="services.html">Amazon Commerce</a></li>
         </ul>
       </div>
       <div>
         <div class="footer__col-title">Connect</div>
         <ul class="footer__list">
-          <li><a href="mailto:edgarpateno@gmail.com">edgarpateno@gmail.com</a></li>
+          <li><a href="mailto:edgarpateno80@gmail.com">edgarpateno80@gmail.com</a></li>
+<li><a href="https://wa.me/639311260820" target="_blank" rel="noopener">WhatsApp +63 931 126 0820</a></li>
           <li><a href="https://linkedin.com/in/edgarpateno" target="_blank" rel="noopener">linkedin.com/in/edgarpateno</a></li>
           <li><a href="https://www.upwork.com/freelancers/~018702ee894a4f2392" target="_blank" rel="noopener">upwork.com/freelancers/~018702ee894a4f2392</a></li>
         </ul>
