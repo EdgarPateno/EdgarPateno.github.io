@@ -136,10 +136,18 @@
       var shift = twin.getBoundingClientRect().left - first.getBoundingClientRect().left;
       if (shift > 0) {
         track.style.setProperty('--marquee-shift', shift + 'px');
-        /* Restart so the keyframe picks up the new value. */
+
+        /* Derive the duration from the distance so the on-screen speed stays
+           constant. Cloning changes how far the track travels, so a fixed
+           duration would make the marquee faster on wider screens. */
+        var speed = parseFloat(getComputedStyle(track).getPropertyValue('--marquee-speed')) || 26;
+        var duration = shift / speed;
+
+        /* Restart so the keyframe picks up the new shift. */
         track.style.animation = 'none';
         void track.offsetWidth;
         track.style.animation = '';
+        track.style.animationDuration = duration.toFixed(2) + 's';
       }
     }
   }
@@ -149,14 +157,26 @@
     var primeAll = function () { marqueeTracks.forEach(primeMarquee); };
     primeAll();
 
-    /* Re-measure once webfonts land. Figtree loads async, so the first pass
-       measures fallback-font widths — every clone count and shift computed
-       from those is stale the moment the real face swaps in. */
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(primeAll);
-    } else {
-      window.addEventListener('load', primeAll);
+    /* Re-measure once the webfont actually applies. The font stylesheet is
+       loaded async (rel=preload flipped to stylesheet onload), so
+       document.fonts.ready can resolve BEFORE the @font-face is registered —
+       it reports "loaded" while text is still in the fallback face, and every
+       width measured then is wrong by ~90px.
+
+       So watch an off-screen probe instead: when the real face applies, the
+       probe's width changes and we re-prime. Self-correcting for any cause of
+       reflow, and the probe is never touched by primeMarquee, so no recursion. */
+    if (window.ResizeObserver) {
+      var probe = document.createElement('span');
+      probe.setAttribute('aria-hidden', 'true');
+      probe.textContent = 'AVXWavxg0123456789';
+      probe.style.cssText = 'position:absolute;left:-9999px;top:0;' +
+                            'white-space:nowrap;font-size:2rem;pointer-events:none;';
+      document.body.appendChild(probe);
+      new ResizeObserver(primeAll).observe(probe);
     }
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(primeAll);
+    window.addEventListener('load', primeAll);
 
     var lastW = window.innerWidth;
     var resizeTimer;

@@ -475,7 +475,11 @@ em {
      width include its own spacing, so -50% is exactly one half. */
   gap: 0;
   width: max-content;
-  animation: marquee 28s linear infinite;
+  /* Speed in px/sec. nav.js turns this into a duration from the measured
+     shift, so the strip scrolls at the same rate no matter how many copies
+     the viewport needs. The duration here is only the no-JS fallback. */
+  --marquee-speed: 26;
+  animation: marquee 48s linear infinite;
   font-size: .88rem;
   font-weight: 600;
   color: var(--accent);
@@ -721,13 +725,16 @@ em {
   /* Same seamless-loop rule as .proof-strip__track — spacing lives on the
      items, not in a flex gap, so translateX(-50%) lands on the duplicate. */
   gap: 0;
-  animation: marquee 35s linear infinite;
+  --marquee-speed: 22;
+  animation: marquee 68s linear infinite;
   width: max-content;
 }
 .marquee__track > * { margin-right: 12px; flex-shrink: 0; }
 .marquee__track--rev {
   animation-direction: reverse;
-  animation-duration: 42s;
+  /* Slightly slower than the row above so the two don't scroll in lockstep. */
+  --marquee-speed: 17;
+  animation-duration: 78s;
 }
 .marquee:hover .marquee__track { animation-play-state: paused; }
 @keyframes marquee {
