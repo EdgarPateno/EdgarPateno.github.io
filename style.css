@@ -426,6 +426,9 @@ em {
 .hero__visual { position: relative; }
 
 /* ─── BROWSER MOCKUP (auto-scrolling page) ────────────────── */
+/* Shared by the hero and every work case study. Each instance sets its own
+   --page-ar (screenshot height/width) inline, since the ratio differs per
+   store; nav.js derives the duration so they all scroll at one speed. */
 .browser {
   margin: 0;
   border: 1px solid var(--border);
@@ -477,6 +480,10 @@ em {
   background: var(--surface);
 }
 .browser__page {
+  /* Scroll rate in px/sec. nav.js converts it to a duration from the actual
+     travel distance, so a short page and a tall one move at the same pace.
+     The duration below is only the no-JS fallback. */
+  --scroll-speed: 46;
   display: block;
   width: 100%;
   height: auto;
@@ -888,6 +895,7 @@ em {
   border-radius: var(--radius);
   border: 1px solid var(--border);
 }
+.case-study__visual .browser { position: sticky; top: calc(var(--nav-h) + 24px); }
 .case-study__stat-grid {
   display: grid;
   grid-template-columns: repeat(2,1fr);
@@ -1196,6 +1204,9 @@ em {
   .hero__inner          { grid-template-columns: 1fr; }
   .hero__visual         { display: block; max-width: 560px; }
   .browser__screen      { --screen-ar: 0.62; }
+  /* Cards stack here, so a sticky mockup would pin while its own copy
+     scrolls underneath it. */
+  .case-study__visual .browser { position: static; }
   .hero__stats          { grid-template-columns: repeat(2,1fr); }
   .about__inner         { grid-template-columns: 1fr; }
   .about__photo         { max-width: 380px; }

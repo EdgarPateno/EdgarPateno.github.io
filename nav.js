@@ -152,9 +152,26 @@
     }
   }
 
+  /* ── BROWSER MOCKUP SCROLL SPEED ─────────────────────────────
+     Each mockup shows a different store, so the screenshots differ in height
+     and a single duration would make short pages crawl and tall ones race.
+     Derive the duration from the actual travel distance instead.           */
+  function primeBrowser(page) {
+    var screen = page.parentElement;
+    if (!screen) return;
+    var travel = page.getBoundingClientRect().height - screen.getBoundingClientRect().height;
+    if (travel <= 0) return;
+    var speed = parseFloat(getComputedStyle(page).getPropertyValue('--scroll-speed')) || 46;
+    page.style.animationDuration = (travel / speed).toFixed(1) + 's';
+  }
+
   var marqueeTracks = document.querySelectorAll('.proof-strip__track, .marquee__track');
-  if (marqueeTracks.length) {
-    var primeAll = function () { marqueeTracks.forEach(primeMarquee); };
+  if (marqueeTracks.length || document.querySelector('.browser__page')) {
+    var browserPages = document.querySelectorAll('.browser__page');
+    var primeAll = function () {
+      marqueeTracks.forEach(primeMarquee);
+      browserPages.forEach(primeBrowser);
+    };
     primeAll();
 
     /* Re-measure once the webfont actually applies. The font stylesheet is
