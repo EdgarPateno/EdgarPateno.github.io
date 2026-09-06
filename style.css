@@ -732,7 +732,11 @@ em {
 .marquee:hover .marquee__track { animation-play-state: paused; }
 @keyframes marquee {
   from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  /* nav.js measures the exact distance between the two duplicate halves and
+     sets --marquee-shift. Percentages resolve against the border box, which
+     can sit a fraction of a pixel away from that distance and leave a faint
+     seam; an exact px value removes it. Falls back to -50% without JS. */
+  to   { transform: translateX(calc(var(--marquee-shift, 50%) * -1)); }
 }
 .mpill {
   display: inline-flex;

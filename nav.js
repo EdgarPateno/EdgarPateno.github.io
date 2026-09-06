@@ -91,6 +91,83 @@
     document.querySelectorAll('.hero__stat-num').forEach(function (el) { cio.observe(el); });
   }
 
+  /* ── MARQUEE SIZING ──────────────────────────────────────────
+     Each track ships two identical halves and animates translateX(-50%).
+     That only looks seamless if ONE half is at least as wide as its
+     container — otherwise the content runs out mid-scroll, leaves a blank
+     strip, and visibly snaps back at the wrap.
+
+     A fixed number of copies can't satisfy that at every screen width, so
+     clone the canonical set until one half covers the container, then
+     mirror it. Re-runs on resize.                                        */
+  function primeMarquee(track) {
+    if (!track || !track.parentElement) return;
+
+    /* Cache the canonical set once — the markup ships it twice. */
+    if (!track.__set) {
+      var kids = Array.prototype.slice.call(track.children);
+      if (!kids.length) return;
+      track.__set = kids.slice(0, Math.ceil(kids.length / 2))
+                        .map(function (n) { return n.cloneNode(true); });
+    }
+    var set = track.__set;
+    if (!set.length) return;
+
+    var need = track.parentElement.clientWidth;
+    if (!need) return;
+
+    track.textContent = '';
+    var perHalf = 0;
+    do {
+      set.forEach(function (n) { track.appendChild(n.cloneNode(true)); });
+      perHalf++;
+    } while (track.offsetWidth < need && perHalf < 20);
+
+    /* Mirror so the shift lands exactly on the duplicate. */
+    for (var i = 0; i < perHalf; i++) {
+      set.forEach(function (n) { track.appendChild(n.cloneNode(true)); });
+    }
+
+    /* Publish the exact distance between duplicate starts, so the animation
+       translates by that rather than by a percentage of the border box. */
+    var first = track.children[0];
+    var twin  = track.children[perHalf * set.length];
+    if (first && twin) {
+      var shift = twin.getBoundingClientRect().left - first.getBoundingClientRect().left;
+      if (shift > 0) {
+        track.style.setProperty('--marquee-shift', shift + 'px');
+        /* Restart so the keyframe picks up the new value. */
+        track.style.animation = 'none';
+        void track.offsetWidth;
+        track.style.animation = '';
+      }
+    }
+  }
+
+  var marqueeTracks = document.querySelectorAll('.proof-strip__track, .marquee__track');
+  if (marqueeTracks.length) {
+    var primeAll = function () { marqueeTracks.forEach(primeMarquee); };
+    primeAll();
+
+    /* Re-measure once webfonts land. Figtree loads async, so the first pass
+       measures fallback-font widths — every clone count and shift computed
+       from those is stale the moment the real face swaps in. */
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(primeAll);
+    } else {
+      window.addEventListener('load', primeAll);
+    }
+
+    var lastW = window.innerWidth;
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+      if (window.innerWidth === lastW) return;   /* ignore mobile URL-bar height changes */
+      lastW = window.innerWidth;
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(primeAll, 200);
+    }, { passive: true });
+  }
+
   /* ── FORM VALIDATION + SUBMIT ── */
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
