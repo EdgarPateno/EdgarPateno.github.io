@@ -231,8 +231,22 @@
     function hideFail() { if (failEl) failEl.hidden = true; }
 
     form.addEventListener('submit', function (e) {
-      /* No fetch support: let the browser POST natively to the form action. */
-      if (typeof window.fetch !== 'function' || !form.getAttribute('action')) return;
+      /* A data-validate form with no action is a configuration mistake, and
+         letting it through is the worst possible outcome: the browser does a
+         native GET back to the current page, so the submission goes nowhere
+         AND every field value — including the visitor's email — is written
+         into the URL, their history and any referrer. The audit form shipped
+         in that state. Block it and say so loudly rather than degrade. */
+      if (!form.getAttribute('action')) {
+        e.preventDefault();
+        showFail();
+        console.error('[form] no action attribute; refusing to submit', form);
+        return;
+      }
+
+      /* No fetch support: let the browser POST natively to the form action.
+         Safe here because an action exists and method is POST. */
+      if (typeof window.fetch !== 'function') return;
 
       e.preventDefault();
       if (sending) return;

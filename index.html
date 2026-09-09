@@ -346,8 +346,20 @@
           <li>No sales pitch</li>
         </ul>
         <div class="form-wrapper">
-          <form data-validate novalidate data-success="audit-success">
-            <input name="website" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true">
+          <form
+            id="audit-form"
+            class="form"
+            action="https://formspree.io/f/mjgjqerj"
+            method="POST"
+            data-validate
+            data-success="audit-success"
+            data-fail="audit-fail"
+            novalidate
+          >
+            <!-- honeypot — must be named _gotcha: that is the name nav.js
+                 checks and the one Formspree drops server-side. -->
+            <input name="_gotcha" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true">
+            <input type="hidden" name="_subject" value="Free store audit request from edgarpateno.github.io">
             <div class="form__group">
               <label for="audit-url" class="form__label form__label--req">Your Store URL</label>
               <input type="url" id="audit-url" name="store_url" class="form__input" placeholder="https://yourstore.myshopify.com" required>
@@ -360,6 +372,12 @@
             </div>
             <button type="submit" class="btn btn--primary btn--full" style="margin-top:8px">Get My Free Audit →</button>
           </form>
+          <div class="form__fail" id="audit-fail" role="alert" hidden>
+            <p><strong>That didn't send.</strong> Something went wrong on the way to my inbox
+            &mdash; please email me directly at
+            <a href="mailto:edgarpateno80@gmail.com">edgarpateno80@gmail.com</a>
+            or message <a href="https://wa.me/639311260820" target="_blank" rel="noopener">WhatsApp +63&nbsp;931&nbsp;126&nbsp;0820</a>.</p>
+          </div>
           <div class="form__success" id="audit-success">
             <h3>Audit request received!</h3>
             <p>I'll review your store and send a Loom within 24 hours.</p>
