@@ -57,6 +57,26 @@
   canvas.setAttribute('aria-hidden', 'true');
   var ctx = canvas.getContext && canvas.getContext('2d', { alpha: true });
   if (!ctx) return; /* no 2d context: leave the page exactly as it was */
+
+  /* Set the layout-critical properties INLINE rather than relying on the
+     .node-field rule in style.css.
+     This script and the stylesheet are cached independently, so a returning
+     visitor can get the new nodefield.js with a stale style.css. Without these
+     the canvas is a static block element the size of the viewport, sitting as
+     the first child of <body> — it pushes the entire page below the fold. The
+     stylesheet keeps the same rule for readability; these guarantee it.
+     Worst case with a stale stylesheet is now that <body> is still opaque and
+     simply hides the field: no field, correct layout. */
+  var s = canvas.style;
+  s.position = 'fixed';
+  s.top = '0';
+  s.left = '0';
+  s.width = '100%';
+  s.height = '100%';
+  s.zIndex = '-1';
+  s.pointerEvents = 'none';
+  s.display = 'block';
+
   document.body.insertBefore(canvas, document.body.firstChild);
 
   var reduced =
