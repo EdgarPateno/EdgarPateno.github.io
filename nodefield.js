@@ -41,16 +41,17 @@
   var RETURN = 0.035;    /* how fast a pushed node eases back to its drift */
   var AREA_PER_NODE = 15000;
 
-  /* Light theme: roughly a third of the original alphas, or the mesh
-     overpowers body copy sitting on top of it. Both numbers are contrast
-     limits, not taste:
-       LINE 0.16 -> a line behind --muted #5E625E leaves 5.01:1 (AA needs 4.5)
-       NODE 0.20 -> a dot landing directly behind --muted leaves 4.52:1
-     At the original 0.42 a dot dropped muted text to 3.07:1. Raise either of
-     these and re-check against --muted, which is the tightest text on the
-     site (6.2:1 on plain white). */
-  var LINE_ALPHA = 0.16;
-  var NODE_ALPHA = 0.20;
+  /* Dark theme. These are contrast limits, not taste. --muted #A3A3A3 is the
+     tightest text on the site (8.2:1 on the #141414 ground) and the mesh
+     LIGHTENS what sits behind it, so every step up costs contrast. Measured
+     against the composited result, with the mesh in brand green #19BC02:
+       LINE 0.30 -> a line behind --muted leaves 4.86:1 (AA needs 4.5)
+       NODE 0.30 -> a dot landing behind --muted leaves the same 4.86:1
+     Dots still read brighter than lines because line alpha falls off with
+     distance and only reaches this peak at zero separation. Raise either and
+     re-check against --muted. */
+  var LINE_ALPHA = 0.30;
+  var NODE_ALPHA = 0.30;
 
   var canvas = document.createElement('canvas');
   canvas.className = 'node-field';

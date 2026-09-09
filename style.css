@@ -1,33 +1,52 @@
 /* ─── TOKENS ──────────────────────────────────────────────── */
-/* Design system derived from upwork.com (scraped 2026-09-06):
-   primary #108A00 · bg #FFFFFF · ink #181818 · pill buttons · 4px base unit */
-:root {
-  /* Surfaces */
-  --bg:         #FFFFFF;
-  --surface:    #F7F9F7;   /* Upwork soft green-tinted panel */
-  --surface-2:  #EDF2ED;
-  --border:     #E4EBE4;
-  --border-str: #C9D4C9;
+/* Dark charcoal theme. Neutral greys on purpose — the only colour in the
+   system is the Upwork green, so it carries all the emphasis.
 
-  /* Brand */
-  --accent:     #108A00;   /* Upwork green */
-  --accent-hi:  #14A800;   /* hover */
-  --accent-dk:  #0A6B00;   /* pressed */
-  --accent-sf:  #E8F5E6;   /* green wash */
-  --lime:       #D2FF00;   /* Upwork chartreuse — decoration / dark bands */
-  --on-accent:  #FFFFFF;
+   Every surface below the ground is TRANSLUCENT, not opaque. That is what
+   lets the node field (nodefield.js) read through the whole page instead of
+   only in the gaps between bands; an opaque panel would mask it. Contrast
+   figures in the comments are measured against the composited result, not
+   against the token colour on its own. */
+:root {
+  /* Surfaces — the ground is opaque, everything above it is a veil. */
+  --bg:         #141414;   /* page ground */
+  --surface:    rgba(255,255,255,.045);  /* raised panel  ≈ #1F1F1F */
+  --surface-2:  rgba(255,255,255,.075);  /* pressed/well  ≈ #262626 */
+  --border:     rgba(255,255,255,.13);
+  --border-str: rgba(255,255,255,.26);
+
+  /* Brand — #14A800 is Upwork's own green, one step up from the #108A00
+     used on the light theme, which only managed 4.09:1 here. This value is
+     the rare one that works BOTH ways: 5.82:1 as text on the ground, and
+     5.82:1 for near-black text sitting on it as a button fill. White on it
+     is only 3.17:1, so --on-accent is dark, not white. */
+  --accent:     #19BC02;   /* 7.2:1 on ground; 5.5:1 as pill text on its own
+                              --accent-sf tint, where #14A800 gave only 4.4 */
+  --accent-hi:  #23D208;   /* hover */
+  --accent-dk:  #14A800;   /* pressed */
+  --accent-sf:  rgba(25,188,2,.14);  /* green wash → a tint, not a fill */
+  --lime:       #D2FF00;   /* chartreuse, kept for secondary accents */
+  --on-accent:  #0B0B0B;
 
   /* Ink */
-  --text:       #181818;
-  --text-2:     #3C403C;
-  --muted:      #5E625E;   /* 4.9:1 on white — AA */
+  --text:       #F5F5F5;   /* 16.9:1 on ground */
+  --text-2:     #D4D4D4;   /* 12.4:1 */
+  --muted:      #ADADAD;   /* 8.2:1 on ground; 5.0:1 where two --surface
+                              veils stack (the stat cells), where #A3A3A3
+                              gave only 4.4 */
 
-  /* Inverted band palette */
-  --dark:       #001E00;   /* Upwork deep green-black */
-  --dark-2:     #0A2A0A;
-  --dark-text:  #F2F7F2;
-  --dark-muted: #A9B5A9;
-  --dark-border: rgba(255,255,255,.14);
+  /* Deeper band. On a dark site this is the RECESSED surface rather than the
+     only dark one, so it is a black veil rather than a solid colour — the
+     node field still shows through it. */
+  --dark:       rgba(0,0,0,.34);
+  --dark-2:     rgba(0,0,0,.5);
+  --dark-text:  #F5F5F5;
+  --dark-muted: #ADADAD;
+  --dark-border: rgba(255,255,255,.13);
+
+  /* Feedback */
+  --danger:     #FF6B6B;   /* 5.9:1 on ground; #C9252D was 2.6:1 */
+  --danger-sf:  rgba(255,107,107,.12);
 
   /* Geometry — 4px base unit */
   --radius:      8px;
@@ -37,16 +56,18 @@
   --nav-h:   72px;
   --sec-y:   96px;
 
-  /* Node field (nodefield.js) — bare "r, g, b" triples so the script can
-     compose them with a per-line alpha. Brand green, so the mesh reads as
-     part of the identity rather than generic grey noise. */
-  --nf-line:    16, 138, 0;    /* --accent  */
-  --nf-node:    10, 107, 0;    /* --accent-dk, slightly darker than the lines */
+  /* Elevation — a soft grey drop reads as nothing on charcoal, so depth
+     comes from the inset top highlight in .card. These stay for the cast
+     shadow only. */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.4);
+  --shadow-md: 0 4px 12px rgba(0,0,0,.45), 0 12px 28px rgba(0,0,0,.35);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,.5), 0 24px 48px rgba(0,0,0,.4);
 
-  /* Elevation — soft, light-theme appropriate */
-  --shadow-sm: 0 1px 2px rgba(24,24,24,.04), 0 1px 3px rgba(24,24,24,.06);
-  --shadow-md: 0 4px 12px rgba(24,24,24,.06), 0 12px 28px rgba(24,24,24,.05);
-  --shadow-lg: 0 8px 24px rgba(24,24,24,.08), 0 24px 48px rgba(24,24,24,.07);
+  /* Node field (nodefield.js) — bare "r, g, b" triples so the script can
+     compose them with a per-line alpha. Light green on the charcoal, the
+     inverse of the light theme. */
+  --nf-line:    25, 188, 2;
+  --nf-node:    25, 188, 2;
 }
 
 /* ─── NODE FIELD ─────────────────────────────────────────── */
@@ -140,7 +161,7 @@ em {
   letter-spacing: .04em;
   color: var(--accent);
   background: var(--accent-sf);
-  border: 1px solid rgba(16,138,0,.22);
+  border: 1px solid rgba(20,168,0,.30);
   border-radius: var(--radius-pill);
 }
 
@@ -171,7 +192,7 @@ em {
   background: var(--accent-hi);
   border-color: var(--accent-hi);
   transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(16,138,0,.28);
+  box-shadow: 0 6px 18px rgba(20,168,0,.34);
 }
 .btn--primary:active { background: var(--accent-dk); transform: translateY(0); }
 .btn--primary:focus-visible {
@@ -196,7 +217,11 @@ em {
 
 /* ─── CARD ───────────────────────────────────────────────── */
 .card {
-  background: var(--bg);
+  /* Veil, not a fill — an opaque card would punch a hole in the node field.
+     The inset top highlight is what reads as "raised" on a dark ground; a
+     soft grey drop shadow does nothing here. */
+  background: var(--surface);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06), var(--shadow-sm);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 28px;
@@ -211,26 +236,15 @@ em {
 
 /* ─── SECTION ────────────────────────────────────────────── */
 .section { padding: var(--sec-y) 0; }
+/* The whole site is dark now, so this no longer has to rescope every token
+   to invert its contents — it inherits the dark values. It survives purely as
+   a recessed band: a black veil, still translucent so the node field reads
+   through it. The old chartreuse rescope is gone too; with one dark palette
+   the green works everywhere and two accent colours read as inconsistent. */
 .section--dark {
   background: var(--dark);
-  color: var(--dark-text);
-  /* Rescope tokens so every descendant inverts without extra rules.
-     Chartreuse replaces green here — #108A00 lacks contrast on #001E00. */
-  --accent:    var(--lime);
-  --accent-hi: #E4FF4D;
-  --accent-dk: #B8E000;
-  --accent-sf: rgba(210,255,0,.12);
-  --on-accent: #001E00;
-  --text:      var(--dark-text);
-  --text-2:    #DCE5DC;
-  --muted:     var(--dark-muted);
-  --border:    var(--dark-border);
-  --border-str: rgba(255,255,255,.26);
-  --surface:   var(--dark-2);
-  --bg:        var(--dark);
+  border-block: 1px solid var(--border);
 }
-.section--dark .card { background: var(--dark-2); box-shadow: none; }
-.section--dark .card:hover { box-shadow: 0 8px 32px rgba(0,0,0,.5); }
 .section--dark .btn--secondary { background: transparent; }
 .section--surface { background: var(--surface); }
 .sec-label  { margin-bottom: 16px; }
@@ -255,14 +269,14 @@ em {
   top: 0;
   inset-inline: 0;
   z-index: 900;
-  background: rgba(255,255,255,.82);
+  background: rgba(20,20,20,.72);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid transparent;
   transition: border-color .3s, background .3s;
 }
 .nav.scrolled {
-  background: rgba(255,255,255,.97);
+  background: rgba(20,20,20,.92);
   border-bottom-color: var(--border);
   box-shadow: var(--shadow-sm);
 }
@@ -346,13 +360,7 @@ em {
 /* ─── FOOTER ─────────────────────────────────────────────── */
 .footer {
   background: var(--dark);
-  color: var(--dark-text);
-  border-top: 1px solid var(--dark-border);
-  --accent:    var(--lime);
-  --on-accent: #001E00;
-  --text:      var(--dark-text);
-  --muted:     var(--dark-muted);
-  --border:    var(--dark-border);
+  border-top: 1px solid var(--border);
 }
 .footer__main { padding: 64px 0 48px; }
 .footer__grid {
@@ -759,10 +767,10 @@ em {
 .form__select option { background: var(--surface); color: var(--text); }
 .form__group.error .form__input,
 .form__group.error .form__select,
-.form__group.error .form__textarea { border-color: #C9252D; }
+.form__group.error .form__textarea { border-color: var(--danger); }
 .form__error-msg {
   font-size: .8rem;
-  color: #C9252D;
+  color: var(--danger);
   margin-top: 4px;
   display: none;
 }
@@ -781,14 +789,14 @@ em {
 .form__fail {
   margin-bottom: 20px;
   padding: 16px 18px;
-  border: 1px solid rgba(201,37,45,.28);
-  border-left: 3px solid #C9252D;
+  border: 1px solid rgba(255,107,107,.34);
+  border-left: 3px solid var(--danger);
   border-radius: var(--radius);
-  background: #FDF3F3;
+  background: var(--danger-sf);
 }
-.form__fail p { font-size: .93rem; line-height: 1.6; color: #7A1319; margin: 0; }
-.form__fail a { color: #C9252D; text-decoration: underline; font-weight: 600; }
-.form__fail a:hover { color: #7A1319; }
+.form__fail p { font-size: .93rem; line-height: 1.6; color: #FFC9C9; margin: 0; }
+.form__fail a { color: var(--danger); text-decoration: underline; font-weight: 600; }
+.form__fail a:hover { color: #FFC9C9; }
 
 /* In-flight submit state — never uses [disabled], so the button stays
    focusable and screen readers keep announcing it. */
@@ -1015,7 +1023,7 @@ em {
   display: inline-block;
   padding: 3px 12px;
   background: var(--accent-sf);
-  border: 1px solid rgba(16,138,0,.22);
+  border: 1px solid rgba(20,168,0,.30);
   border-radius: 100px;
   font-size: .75rem;
   font-weight: 600;
@@ -1145,7 +1153,7 @@ em {
   height: 44px;
   border-radius: 12px;
   background: var(--accent-sf);
-  border: 1px solid rgba(16,138,0,.22);
+  border: 1px solid rgba(20,168,0,.30);
   color: var(--accent);
   font-weight: 700;
   font-size: 1.05rem;
@@ -1223,7 +1231,7 @@ em {
   z-index: 1000;
   padding: 12px 20px;
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
   font-weight: 600;
   border-radius: 0 0 var(--radius) 0;
 }
