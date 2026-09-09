@@ -37,11 +37,37 @@
   --nav-h:   72px;
   --sec-y:   96px;
 
+  /* Node field (nodefield.js) — bare "r, g, b" triples so the script can
+     compose them with a per-line alpha. Brand green, so the mesh reads as
+     part of the identity rather than generic grey noise. */
+  --nf-line:    16, 138, 0;    /* --accent  */
+  --nf-node:    10, 107, 0;    /* --accent-dk, slightly darker than the lines */
+
   /* Elevation — soft, light-theme appropriate */
   --shadow-sm: 0 1px 2px rgba(24,24,24,.04), 0 1px 3px rgba(24,24,24,.06);
   --shadow-md: 0 4px 12px rgba(24,24,24,.06), 0 12px 28px rgba(24,24,24,.05);
   --shadow-lg: 0 8px 24px rgba(24,24,24,.08), 0 24px 48px rgba(24,24,24,.07);
 }
+
+/* ─── NODE FIELD ─────────────────────────────────────────── */
+/* Canvas for nodefield.js. Fixed behind everything, never clickable, never in
+   the accessibility tree. Sections that set their own background
+   (.section--dark, .section--surface, cards) mask it; the plain .section
+   blocks and .hero are transparent and let it show through. */
+.node-field {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* Fades in after the first frame so there is no pop of half-drawn nodes.
+     Opacity only, so it stays on the compositor. */
+  opacity: 0;
+  transition: opacity .9s ease-out;
+}
+.node-field[data-ready="true"] { opacity: 1; }
 
 /* ─── REDUCED MOTION ──────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
@@ -54,7 +80,13 @@
 
 /* ─── RESET ──────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  /* Holds the page fill so <body> can be transparent (see the note there).
+     Also keeps overscroll at either end of the page white instead of grey. */
+  background: var(--bg);
+}
 img, video { display: block; max-width: 100%; height: auto; }
 a { color: inherit; text-decoration: none; }
 button { font-family: inherit; cursor: pointer; }
@@ -64,7 +96,9 @@ input, textarea, select { font-family: inherit; }
 /* ─── BASE ───────────────────────────────────────────────── */
 body {
   font-family: 'Figtree', 'Neue Montreal', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
-  background: var(--bg);
+  /* Transparent on purpose — the page fill sits on <html> (see below) so the
+     fixed z-index:-1 node field can paint between the two. */
+  background: transparent;
   color: var(--text);
   font-size: 18px;
   line-height: 1.7;
