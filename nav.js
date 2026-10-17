@@ -319,3 +319,65 @@
   });
 
 })();
+
+/* ── HERO ROTATOR (Shopify ⇄ Web Apps) ──
+   Autoplays every data-interval ms; pauses on hover/focus; a tab click
+   picks a slide and stops autoplay. Reduced motion → no autoplay. */
+(function () {
+  var root = document.querySelector('.hero-rotator');
+  if (!root) return;
+  var slides = root.querySelectorAll('.hero-rotator__slide');
+  var tabs = root.querySelectorAll('.hero-rotator__tab');
+  var ctas = document.querySelectorAll('[data-rotator-cta]');
+  var ms = parseInt(root.getAttribute('data-interval'), 10) || 6500;
+  var current = 0, timer = null, stopped = false;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  root.style.setProperty('--rotator-ms', ms + 'ms');
+
+  function show(i) {
+    current = i;
+    slides.forEach(function (s, n) {
+      var on = n === i;
+      s.classList.toggle('is-active', on);
+      if (on) { s.removeAttribute('aria-hidden'); s.removeAttribute('inert'); }
+      else { s.setAttribute('aria-hidden', 'true'); s.setAttribute('inert', ''); }
+    });
+    tabs.forEach(function (t, n) {
+      t.classList.toggle('is-active', n === i);
+      t.setAttribute('aria-pressed', n === i ? 'true' : 'false');
+    });
+    /* primary CTA follows the slide: store audit ⇄ free call */
+    ctas.forEach(function (a) {
+      var on = a.getAttribute('data-rotator-cta') === String(i);
+      a.classList.toggle('is-active', on);
+      if (on) { a.removeAttribute('aria-hidden'); a.removeAttribute('tabindex'); }
+      else { a.setAttribute('aria-hidden', 'true'); a.setAttribute('tabindex', '-1'); }
+    });
+  }
+  function schedule() {
+    clearTimeout(timer);
+    if (stopped) return;
+    /* restart the progress-bar animation */
+    root.classList.remove('is-playing'); void root.offsetWidth; root.classList.add('is-playing');
+    timer = setTimeout(function () { show((current + 1) % slides.length); schedule(); }, ms);
+  }
+  function pause() { if (stopped) return; clearTimeout(timer); root.classList.add('is-paused'); }
+  function resume() { if (stopped) return; root.classList.remove('is-paused'); schedule(); }
+
+  tabs.forEach(function (t, n) {
+    t.addEventListener('click', function () {
+      stopped = true; clearTimeout(timer);
+      root.classList.remove('is-playing', 'is-paused');
+      show(n);
+    });
+  });
+  root.addEventListener('mouseenter', pause);
+  root.addEventListener('mouseleave', resume);
+  root.addEventListener('focusin', pause);
+  root.addEventListener('focusout', function (e) { if (!root.contains(e.relatedTarget)) resume(); });
+  document.addEventListener('visibilitychange', function () { document.hidden ? pause() : resume(); });
+
+  show(0);
+  if (reduce) { stopped = true; return; }
+  schedule();
+})();
